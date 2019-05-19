@@ -2,7 +2,7 @@
 users:
   - default
   - name: vagrant
-    groups: wheel
+    groups: sudo
     sudo: ['ALL=(ALL) NOPASSWD:ALL']
     plain_text_passwd: vagrant
     ssh-authorized-keys:
@@ -30,6 +30,3 @@ runcmd:
 
   # Stop cloud-init from randomizing root password on startup
   - sed -i 's/.*root:RANDOM/#&/g' /etc/cloud/cloud.cfg.d/99_onprem.cfg
-
-  # Make it look like RedHat
-  - ln -s /etc/system-release /etc/redhat-release

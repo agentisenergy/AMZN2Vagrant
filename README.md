@@ -3,19 +3,19 @@
 *Improvements or suggestions towards this document are welcome.*
 
 * Download latest `.vdi` file. You should be able to find the most recent `.vdi`
-file at https://cdn.amazonlinux.com/os-images/latest/virtualbox/ Alternatively,
-here is a direct link to the most current version at the time of writing this (January 2019) https://cdn.amazonlinux.com/os-images/2.0.20181114/virtualbox/amzn2-virtualbox-2.0.20181114-x86_64.xfs.gpt.vdi
+file at https://cdn.amazonlinux.com/os-images/latest/virtualbox/
 
 * Build virtual CD that contains cloud-init data (Will generate a file `seed.iso`. Ensure that this is ran from the same
 directly which contains the files `user-data` and `meta-data` from this repository.
 ###### Linux:
 ```bash
+# Navigate into the seedconfig folder and execute the following command:
 genisoimage -output seed.iso -volid cidata -joliet -rock user-data meta-data
 ```
 ###### Mac:
 ```bash
-brew install cdrtools
-mkisofs -output seed.iso -volid cidata -joliet -rock user-data meta-data
+# Navigate one level up from the seedconfig folder and execute the following command:
+hdiutil makehybrid -o seed.iso -hfs -joliet -iso -default-volume-name cidata seedconfig/
 ```
 
 ### Creating VM in VirtualBox
@@ -63,9 +63,6 @@ export HISTSIZE=0
 yum clean all
 rm -rf /var/cache/yum
 
-#Optimize the area of the virtual hard disk
-dd if=/dev/zero of=/ZERO bs=1M
-rm -f /ZERO
 shutdown -h now
 ```
 
@@ -74,9 +71,9 @@ shutdown -h now
 These commands to be executed on the host machine
 ```bash
 vagrant init
-vagrant package --base AMZN --output amazonlinux2.box
+vagrant package --base AMZN --output amazon-linux-2_X.X.X.box
 ```
-The output amazonlinux2.box is the file of Base Box
+The output amazon-linux-2_X.X.X.box is the file of Base Box
 
 #### Notes:
 The ssh key in the user-data file is the usual Vagrant insecure keypair from [here](https://github.com/hashicorp/vagrant/tree/master/keys)
