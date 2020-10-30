@@ -29,30 +29,13 @@ something like "Use an existing virtual hard disk file")
 * Add the `seed.iso` file generated above to the virtual CD drive
 * Start the Amazon Linux 2 virtual machine
 
-### Installing VirtualBox Guest Additions
+### Do not install VirtualBox Guest Additions
+* We will use the vagrant-vbguest plugin to install GuestAdditions as needed
 
-* Remove the cloud-init ISO (`seed.iso`)image from VirtualBox settings
-* Log in to the virtual machine (this can be done in the virtual box terminal window)
-  - user: root
-  - password: vagrant
-* From the VirtualBox menu select Devices->Insert Guest Additions CD Image
-* Inside the terminal, we must now mount the inserted CD (I manually typed these commands into
-the VirtualBox terminal, suggestions of a better approach are welcome)
+### Run system updates
 ```bash
 sudo yum -y update
-
-# next line suggested at https://stackoverflow.com/a/37706087/1241791
-# to solve shared folder issue later on
-sudo yum -y install kernel-headers kernel-devel
-
-#mount the inserted guest additions CD
-mount -r -t iso9660 /dev/cdrom /media
-
-cd /media
-./VBoxLinuxAdditions.run
-systemctl enable vboxadd.service
 ```
-Ignore tainted kernel message
 
 #### Post processing
 ```bash
